@@ -1,0 +1,19 @@
+<h1>Listing articles</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th></th>
+  </tr>
+
+  <% @eventos.each do |evento| %>
+    <tr>
+      <td><%= evento.title %></td>
+      <td><%= evento.text %></td>
+      <td><%= link_to 'Show', evento_path(evento) %></td>
+      <td><%= link_to 'Edit', edit_evento_path(evento) %></td>
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'New article', new_evento_path %>
