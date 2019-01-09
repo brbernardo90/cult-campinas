@@ -1,4 +1,7 @@
 class EventosController < ApplicationController
+	
+  before_action :authenticate_user!
+  
   def index
     @eventos = Evento.all
   end
