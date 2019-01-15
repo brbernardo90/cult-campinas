@@ -12,8 +12,15 @@
       <td><%= evento.title %></td>
       <td><%= evento.text %></td>
       <td><%= link_to 'Show', evento_path(evento) %></td>
-      <td><%= link_to 'Edit', edit_evento_path(evento) %></td>
+      <% if can? :edit, Evento%>
+        <td><%= link_to 'Edit', edit_evento_path(evento) %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
-<%= link_to 'New article', new_evento_path %>
+<% if can? :edit, Evento%>
+  <%= link_to 'New article', new_evento_path %>
+<% end %>
+<% if can? :edit, Evento%>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+<% end %>
