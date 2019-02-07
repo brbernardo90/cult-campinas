@@ -5,6 +5,10 @@ ruby '2.6.0'
 
 gem "devise"
 gem "cancancan"
+gem "doorkeeper"
+gem "grape"
+gem "grape-active_model_serializers"
+gem "grape-swagger"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
