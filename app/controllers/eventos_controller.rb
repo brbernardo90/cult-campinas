@@ -1,6 +1,7 @@
 class EventosController < ApplicationController
 	
   # before_action :authenticate_user!
+  # before_action :doorkeeper_authorize!
   
   load_and_authorize_resource
 

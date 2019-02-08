@@ -1,4 +1,5 @@
 require 'grape-swagger'
+require 'doorkeeper/grape/helpers'
 
 module API  
     module V1
@@ -11,6 +12,12 @@ module API
           mount_path: "/api/v1/swagger_doc",
           hide_format: true
         )
+
+        # helpers Doorkeeper::Grape::Helpers
+
+        # before do
+        #   doorkeeper_authorize!
+        # end  
       end
     end
 end
