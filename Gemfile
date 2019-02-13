@@ -9,6 +9,7 @@ gem "doorkeeper"
 gem "grape"
 gem "grape-active_model_serializers"
 gem "grape-swagger"
+gem 'wine_bouncer', '~> 1.0.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'

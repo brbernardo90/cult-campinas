@@ -4,6 +4,9 @@ require 'doorkeeper/grape/helpers'
 module API  
     module V1
       class Base < Grape::API
+        default_format :json
+        format :json
+        use ::WineBouncer::OAuth2
         mount API::V1::Eventos
         # mount API::V1::AnotherResource
         add_swagger_documentation(
