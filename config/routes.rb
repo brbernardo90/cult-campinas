@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :eventos
   get 'admin/index'
+  # get '/auth/:provider/callback', to: "sessions#create"  
   root 'eventos#index'
   mount API::Base, at: "/"
   # mount GrapeSwaggerRails::Engine, at: "/documentation"

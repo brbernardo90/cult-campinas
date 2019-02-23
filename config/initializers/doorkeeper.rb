@@ -7,24 +7,32 @@ Doorkeeper.configure do
     # raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
     # Put your resource owner authentication logic here.
     # Example implementation:
-    # User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)  
-    User.find_by(id: session[:current_user_id]) || redirect_to(login_url)
+      User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
   end
+
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
   # file then you need to declare this block in order to restrict access to the web interface for
   # adding oauth authorized applications. In other case it will return 403 Forbidden response
   # every time somebody will try to access the admin web interface.
   #
-  # admin_authenticator do
-  #   # Put your admin authentication logic here.
-  #   # Example implementation:
+  admin_authenticator do
+    # Put your admin authentication logic here.
+    # Example implementation:
   
-  #   if current_user
-  #     head :forbidden unless current_user.admin?
-  #   else
-  #     redirect_to sign_in_url
-  #   end
-  # end
+   # if current_user
+   #   head :forbidden unless current_user.admin?
+   # else
+   #   redirect_to sign_in_url
+   # end
+
+     if current_user
+       current_user
+     else
+       # Refer the HERE document at the bottom on why this session variable is being set.
+       session[:user_return_to] = request.fullpath
+       redirect_to(new_user_session_url)
+     end
+  end
 
   # If you are planning to use Doorkeeper in Rails 5 API-only application, then you might
   # want to use API mode that will skip all the views management and change the way how
@@ -106,7 +114,7 @@ Doorkeeper.configure do
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
   #
   # default_scopes  :public
-  # optional_scopes :write
+  # optional_scopes :write, :update
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
@@ -130,7 +138,7 @@ Doorkeeper.configure do
   # The value can be any string. Use nil to disable this feature. When disabled, clients must provide a valid URL
   # (Similar behaviour: https://developers.google.com/accounts/docs/OAuth2InstalledApp#choosingredirecturi)
   #
-  # native_redirect_uri 'urn:ietf:wg:oauth:2.0:oob'
+  native_redirect_uri 'urn:ietf:wg:oauth:2.0:oob'
 
   # Forces the usage of the HTTPS protocol in non-native redirect uris (enabled
   # by default in non-development environments). OAuth2 delegates security in
@@ -160,6 +168,7 @@ Doorkeeper.configure do
   # set  handle_auth_errors to `:raise` and rescue Doorkeeper::Errors::InvalidToken
   # or following specific errors:
   #
+
   #   Doorkeeper::Errors::TokenForbidden, Doorkeeper::Errors::TokenExpired,
   #   Doorkeeper::Errors::TokenRevoked, Doorkeeper::Errors::TokenUnknown
   #
@@ -181,8 +190,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  # grant_flows %w[authorization_code client_credentials]
-  # grant_flows %w(password)
+   grant_flows %w[authorization_code client_credentials]
 
   # Hook into the strategies' request & response life-cycle in case your
   # application needs advanced customization or logging:
